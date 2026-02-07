@@ -243,33 +243,16 @@ namespace MimeKit.Cryptography {
 		}
 
 		/// <summary>
-		/// Gets the database command to select the record matching the specified certificate.
+		/// Limit the query results to a single record.
 		/// </summary>
 		/// <remarks>
-		/// Gets the database command to select the record matching the specified certificate.
+		/// Modifies the SQL <c>SELECT</c> <paramref name="query"/> to limit the query results to a single record.
 		/// </remarks>
-		/// <returns>The database command.</returns>
-		/// <param name="connection">The database connection.</param>
-		/// <param name="certificate">The certificate.</param>
-		/// <param name="fields">The fields to return.</param>
-		protected override DbCommand GetSelectCommand (DbConnection connection, X509Certificate certificate, X509CertificateRecordFields fields)
+		/// <param name="query">A <see cref="StringBuilder"/> containing an SQL <c>SELECT</c> query.</param>
+		/// <returns>A modified SQL query that will limit the results to a single record.</returns>
+		protected override StringBuilder LimitToOne (StringBuilder query)
 		{
-			var fingerprint = certificate.GetFingerprint ().ToLowerInvariant ();
-			var serialNumber = certificate.SerialNumber.ToString ();
-			var issuerName = certificate.IssuerDN.ToString ();
-			var command = CreateCommand ();
-			var query = CreateSelectQuery (fields).Replace ("SELECT", "SELECT top 1");
-
-			// FIXME: Is this really the best way to query for an exact match of a certificate?
-			query = query.Append (" WHERE ISSUERNAME = @ISSUERNAME AND SERIALNUMBER = @SERIALNUMBER AND FINGERPRINT = @FINGERPRINT");
-			command.AddParameterWithValue ("@ISSUERNAME", issuerName);
-			command.AddParameterWithValue ("@SERIALNUMBER", serialNumber);
-			command.AddParameterWithValue ("@FINGERPRINT", fingerprint);
-
-			command.CommandText = query.ToString ();
-			command.CommandType = CommandType.Text;
-
-			return command;
+			return query.Insert ("SELECT ".Length, "TOP 1 ");
 		}
 
 		/// <summary>

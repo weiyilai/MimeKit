@@ -223,6 +223,19 @@ namespace MimeKit.Cryptography {
 		}
 
 		/// <summary>
+		/// Limit the query results to a single record.
+		/// </summary>
+		/// <remarks>
+		/// Modifies the SQL <c>SELECT</c> <paramref name="query"/> to limit the query results to a single record.
+		/// </remarks>
+		/// <param name="query">A <see cref="StringBuilder"/> containing an SQL <c>SELECT</c> query.</param>
+		/// <returns>A modified SQL query that will limit the results to a single record.</returns>
+		protected virtual StringBuilder LimitToOne (StringBuilder query)
+		{
+			return query.Append (" LIMIT 1");
+		}
+
+		/// <summary>
 		/// Gets the name of an index based on the table and columns that it is built against.
 		/// </summary>
 		/// <remarks>
@@ -400,7 +413,7 @@ namespace MimeKit.Cryptography {
 		}
 
 		/// <summary>
-		/// Creates a SELECT query string builder for the specified fields of an X.509 certificate record.
+		/// Create a SELECT query string builder for the specified fields of an X.509 certificate record.
 		/// </summary>
 		/// <remarks>
 		/// Creates a SELECT query string builder for the specified fields of an X.509 certificate record.
@@ -423,7 +436,7 @@ namespace MimeKit.Cryptography {
 		}
 
 		/// <summary>
-		/// Creates a SELECT query string builder for the specified fields of an X.509 CRL record.
+		/// Create a SELECT query string builder for the specified fields of an X.509 CRL record.
 		/// </summary>
 		/// <remarks>
 		/// Creates a SELECT query string builder for the specified fields of an X.509 CRL record.
@@ -471,7 +484,9 @@ namespace MimeKit.Cryptography {
 			query = query.Append (" WHERE ")
 				.Append (CertificateColumnNames.IssuerName).Append (" = ").Append (issuerNameParameter).Append (" AND ")
 				.Append (CertificateColumnNames.SerialNumber).Append (" = ").Append (serialNumberParameter).Append (" AND ")
-				.Append (CertificateColumnNames.Fingerprint).Append (" = ").Append (fingerprintParameter).Append (" LIMIT 1");
+				.Append (CertificateColumnNames.Fingerprint).Append (" = ").Append (fingerprintParameter);
+			query = LimitToOne (query);
+
 			command.AddParameterWithValue (issuerNameParameter, issuerName);
 			command.AddParameterWithValue (serialNumberParameter, serialNumber);
 			command.AddParameterWithValue (fingerprintParameter, fingerprint);
@@ -734,7 +749,9 @@ namespace MimeKit.Cryptography {
 			var query = CreateSelectQuery (fields).Append (" WHERE ")
 				.Append (CrlColumnNames.Delta).Append (" = ").Append (deltaParameter).Append (" AND ")
 				.Append (CrlColumnNames.IssuerName).Append ("= ").Append (issuerNameParameter).Append (" AND ")
-				.Append (CrlColumnNames.ThisUpdate).Append (" = ").Append (thisUpdateParameter).Append (" LIMIT 1");
+				.Append (CrlColumnNames.ThisUpdate).Append (" = ").Append (thisUpdateParameter);
+			query = LimitToOne (query);
+
 			var issuerName = crl.IssuerDN.ToString ();
 			var command = CreateCommand ();
 

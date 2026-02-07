@@ -323,7 +323,7 @@ namespace MimeKit.Cryptography {
 			// * Version 2: v4.9.0 added the SUBJECTDNSNAMES column and started canonicalizing the SUBJECTEMAIL and SUBJECTDNSNAMES columns with the IDN-encoded values.
 
 			if (!hasAnchorColumn) {
-				// Upgrade from Version 1.
+				// Upgrade to Version 1.
 				ExecuteWithinTransaction (() => {
 					var id = GetParameterName (CertificateColumnNames.Id);
 					var anchor = GetParameterName (CertificateColumnNames.Anchor);
@@ -371,7 +371,7 @@ namespace MimeKit.Cryptography {
 				RemoveIndex (connection, table.TableName, CertificateColumnNames.BasicConstraints, CertificateColumnNames.Fingerprint);
 				RemoveIndex (connection, table.TableName, CertificateColumnNames.BasicConstraints, CertificateColumnNames.SubjectEmail);
 			} else if (!hasSubjectDnsNamesColumn) {
-				// Upgrade from Version 2.
+				// Upgrade to Version 2.
 				ExecuteWithinTransaction (() => {
 					var id = GetParameterName (CertificateColumnNames.Id);
 					var subjectEmail = GetParameterName (CertificateColumnNames.SubjectEmail);

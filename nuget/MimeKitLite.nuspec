@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.12">
     <id>MimeKitLite</id>
-    <version>4.14.0</version>
+    <version>4.15.0</version>
     <title>MimeKit Lite</title>
     <authors>Jeffrey Stedfast</authors>
     <owners>Jeffrey Stedfast</owners>
@@ -22,16 +22,13 @@
     </description>
     <summary>An Open Source library for creating and parsing MIME messages.</summary>
     <releaseNotes>
-* Added BodyBuilder.BodyEncoding property to allow setting body text encoding.
-* Fixed a number of TnefPropertyTags that didn't have proper Type info.
-* Added TnefPropertyTag.PuidA and TnefPropertyTag.PuidW and Obsoleted TnefPropertyTag.Puid.
-* Fixed TnefPropertyTag.ToUnicode() to only affect String8 tags.
-* Optimized the Base64Encoder to use hardware acceleration when available.
-* Optimized the Base64Decoder to use hardware acceleration when available.
-* Fixed parsing of short StatusGroups in MessageDeliveryStatus (issue #1181)
-* Fixed MimeParser and ExperimentalMimeParser to consistently adhere to ParserOptions.MaxMimeDepth.
-* Fixed MimeParser and ExperimentalMimeParser to properly (re)initialize their MboxMarker and MboxMarkerOffset properties before parsing each message in an mbox stream. When parsing fails, these properties will now have values of null and -1, respectively.
-* Fixed MimeParser, ExperimentalMimeParser and MimeReader to handle header lines that exceed the internal input buffer length. (issue #1189)
+* Fixed inexact read in TnefPropertyReader.GetEmbeddedMessageReader().
+* Fixed IndexOutOfRangeException in DateTImeUtils.TryParse() when missing timezone after AM/PM. (issue #1204)
+* Added nullable attributes to the API. (issue #1067)
+* AuthenticationResults parsing now supports Gmail style headers. (issue #1208)
+* Changed the Base64Decoder to no longer default to enabling hardware acceleration due to bugs in System.Buffers.Text.Base64.DecodeFromUtf8 (will likely be fixed in .NET 11). (issue #1215)
+* Bumped System.Buffers to 4.6.1 and System.Memory to 4.6.3.
+* Added support for .NET 10.
     </releaseNotes>
     <copyright>.NET Foundation and Contributors</copyright>
     <language>en-US</language>

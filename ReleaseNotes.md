@@ -1,5 +1,24 @@
 # Release Notes
 
+## MimeKit 4.15.0 (2026-02-14)
+
+* Bumped System.Buffers to 4.6.1 and System.Memory to 4.6.3
+* Fixed inexact read in TnefPropertyReader.GetEmbeddedMessageReader()
+* Fixed IndexOutOfRangeException in DateTImeUtils.TryParse() when missing timezone after AM/PM.
+  (issue [#1204](https://github.com/jstedfast/MimeKit/discussions/1204))
+* Added nullable attributes to the API.
+  (issue [#1067](https://github.com/jstedfast/MimeKit/discussions/1067))
+* AuthenticationResults parsing now supports Gmail style headers.
+  (issue [#1208](https://github.com/jstedfast/MimeKit/discussions/1208))
+* Changed the Base64Decoder to no longer default to enabling hardware acceleration due to
+  bugs in System.Buffers.Text.Base64.DecodeFromUtf8 (will likely be fixed in .NET 11).
+  (issue [#1215](https://github.com/jstedfast/MimeKit/discussions/1215))
+* Improved SqlCertificateDatabase abstraction to make it easier to subclass when the
+  SQL syntax does not match SQLite.
+  (issue [#1218](https://github.com/jstedfast/MimeKit/discussions/1218))
+* Bumped BouncyCastle.Cryptography to 2.6.2.
+* Added support for .NET 10.
+
 ## MimeKit 4.14.0 (2025-09-28)
 
 * Updated BouncyCastle.Cryptography dependency to v2.6.1.

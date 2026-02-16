@@ -52,6 +52,20 @@ using System.Runtime.InteropServices;
 	"1877a6d9e71c3ea77e87e61f3878af1d69bf10dce8debe92c54ca8a10afc44dc08674f3db6594e" +
 	"f545d67d31cc3e18b8f90d8f220c4b67d7e87f5b7e8df410ac8faeb3")]
 
+#if ENABLE_CRYPTO
+[assembly: InternalsVisibleTo ("MailKit, PublicKey=00240000048000009400000006020000" +
+	"00240000525341310004000011000000cde209732ce60a8fa70ee643cb32e9bf8149b61018c5b1" +
+	"66489b8a5cae44f1f88ca97ab9d9e035421933a6f0d556acc7c2219ae1464e35386ca1e239aa42" +
+	"508b9edbb4164bfa82aa2a0f4cd983d9e5ba2acfe08a10a2093e2b2bf8408eef43114db89b3999" +
+	"c59af1d3dc2c9f0cdbf51074e9a482cf09c9116ae1c5543ce8ff9b")]
+#else
+[assembly: InternalsVisibleTo ("MailKitLite, PublicKey=0024000004800000940000000602" +
+	"000000240000525341310004000011000000cde209732ce60a8fa70ee643cb32e9bf8149b61018" +
+	"c5b166489b8a5cae44f1f88ca97ab9d9e035421933a6f0d556acc7c2219ae1464e35386ca1e239" +
+	"aa42508b9edbb4164bfa82aa2a0f4cd983d9e5ba2acfe08a10a2093e2b2bf8408eef43114db89b" +
+	"3999c59af1d3dc2c9f0cdbf51074e9a482cf09c9116ae1c5543ce8ff9b")]
+#endif
+
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
